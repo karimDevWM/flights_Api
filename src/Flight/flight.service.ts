@@ -22,9 +22,11 @@ export class FlightService {
     return this.flightModel.findOne({ flightNumber: flightNumber });
   }
 
-  // async exist(readFlightDto: ReadFlightDto): Promise<Flight> {
-  //   if(readFlightDto.flightNumber) {
-  //     return this.flightModel.
-  //   }
-  // }
+  async exist(readFlightDto: ReadFlightDto): Promise<Flight> {
+    if (readFlightDto.flightNumber) {
+      return this.flightModel.findOne({
+        flightNumber: readFlightDto.flightNumber,
+      });
+    }
+  }
 }
