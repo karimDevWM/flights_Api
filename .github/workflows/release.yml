@@ -26,12 +26,18 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.GIT_ACC }}/${{ env.APP }}
           tags: type=match,pattern=\d.\d.\d
 
-      - name: Build and push the Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            "APP=${{ env.APP }}"
+      - name: Build and Push Docker Image
+        run: |
+          docker buildx create --use
+          docker buildx inspect --bootstrap
+          docker buildx build --push -t docker.pkg.github.com/${{ github.repository }}/your-image-name:latest .
+
+      # - name: Build and push the Docker image
+      #   uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ${{ steps.meta.outputs.tags }}
+      #     labels: ${{ steps.meta.outputs.labels }}
+      #     build-args: |
+      #       "APP=${{ env.APP }}"
