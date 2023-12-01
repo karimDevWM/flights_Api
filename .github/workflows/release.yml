@@ -21,10 +21,12 @@ jobs:
       - name: Login to GitHub Packages
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
-      - name: Tag image for GHCR
-        id: tag-image
-        run: |
-          docker tag <span class="math-inline">\{\{ steps\.build\-image\.outputs\.context \}\} ghcr\.io/</span>{{ github.repository }}:${{ github.event.push.head.sha }}
+      - name: Extract metadata for the Docker image
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.GIT_ACC }}/${{ env.APP }}
+          tags: type=match,pattern=\d.\d.\d
 
       - name: Push image to GHCR
         run: docker push ${{ steps.tag-image.outputs.context }}
