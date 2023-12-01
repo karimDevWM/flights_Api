@@ -2,8 +2,7 @@ name: Push Docker Image to GHCR
 
 on:
   pull_request:
-    push:
-      - release
+    - release
 
 jobs:
   build:
