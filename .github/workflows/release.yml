@@ -28,5 +28,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.GIT_ACC }}/${{ env.APP }}
           tags: type=match,pattern=\d.\d.\d
 
-      - name: Push image to GHCR
-        run: docker push ${{ steps.tag-image.outputs.context }}
+      - name: Build and Push Docker Image
+        run: |
+          docker buildx create --use
+          docker buildx inspect --bootstrap
+          docker buildx build --push -t docker.pkg.github.com/karimdevwm/flights_api:latest
