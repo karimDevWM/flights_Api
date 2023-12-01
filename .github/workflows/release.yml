@@ -30,7 +30,9 @@ jobs:
         run: |
           docker buildx create --use
           docker buildx inspect --bootstrap
-          docker buildx build --push -t docker.pkg.github.com/karimdevwm/flights_api:latest .
+          docker push ghcr.io/karimdevwm/flights_api:latest
+          
+      # docker buildx build --push -t docker.pkg.github.com/karimdevwm/flights_api:latest .
 
       # - name: Build and push the Docker image
       #   uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
