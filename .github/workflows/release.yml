@@ -2,12 +2,12 @@ name: Push Docker Image to GHCR
 
 on:
   pull_request:
-    - release
+    branches: ['release']
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-
+    
 jobs:
   build:
     runs-on: ubuntu-latest
